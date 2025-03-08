@@ -29,10 +29,10 @@ class MainMenuScreen extends StatelessWidget {
           child: Transform.rotate(
             angle: -0.1,
             child: const Text(
-              'Drag&Drop Cards!',
+              'Conors Card Game!',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Permanent Marker',
+                fontFamily: 'Roboto',
                 fontSize: 55,
                 height: 1,
               ),

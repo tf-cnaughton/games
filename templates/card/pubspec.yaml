@@ -39,6 +39,11 @@ flutter:
     - family: Permanent Marker
       fonts:
         - asset: assets/fonts/Permanent_Marker/PermanentMarker-Regular.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
+          weight: 700
 
 flutter_launcher_icons:
   android: true
