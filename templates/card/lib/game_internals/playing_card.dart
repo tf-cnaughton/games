@@ -9,8 +9,7 @@ class PlayingCard {
   static final _random = Random();
 
   final CardSuit suit;
-
-  final int value;
+  final String value;
 
   const PlayingCard(this.suit, this.value);
 
@@ -18,15 +17,30 @@ class PlayingCard {
     return PlayingCard(
       CardSuit.values
           .singleWhere((e) => e.internalRepresentation == json['suit']),
-      json['value'] as int,
+      json['value'] as String,
     );
   }
 
   factory PlayingCard.random([Random? random]) {
     random ??= _random;
+    const values = [
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10',
+      'J',
+      'Q',
+      'K',
+      'A'
+    ];
     return PlayingCard(
       CardSuit.values[random.nextInt(CardSuit.values.length)],
-      2 + random.nextInt(9),
+      values[random.nextInt(values.length)],
     );
   }
 
