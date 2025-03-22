@@ -3,7 +3,6 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
@@ -124,8 +123,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   Future<void> _playerWon() async {
     _log.info('Player won');
 
-    // TODO: replace with some meaningful score for the card game
-    final score = Score(1, 1, DateTime.now().difference(_startOfPlay));
+    final score = Score(1, 1, DateTime.now().difference(_startOfPlay), 'Player');
 
     // final playerProgress = context.read<PlayerProgress>();
     // playerProgress.setLevelReached(widget.level.number);

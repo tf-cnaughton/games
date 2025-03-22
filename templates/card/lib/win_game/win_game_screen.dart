@@ -1,9 +1,8 @@
-// Copyright 2022, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../game_internals/score.dart';
@@ -22,8 +21,8 @@ class WinGameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
-
     const gap = SizedBox(height: 10);
+    final TextEditingController nameController = TextEditingController();
 
     return Scaffold(
       backgroundColor: palette.backgroundPlaySession,
@@ -42,10 +41,31 @@ class WinGameScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Score: ${score.score}\n'
-                'Time: ${score.formattedTime}',
+                'Time: ${score.formattedTime}\n'
+                'Name: ${score.playerName}',
                 style: const TextStyle(
                     fontFamily: 'Roboto', fontSize: 20),
               ),
+            ),
+            gap,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: 'Enter your name',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            gap,
+            ElevatedButton(
+              onPressed: () async {
+                score.setPlayerName(nameController.text);
+                await sendScoreToApi(score);
+                GoRouter.of(context).go('/');
+              },
+              child: Text('Submit'),
             ),
           ],
         ),
@@ -57,5 +77,19 @@ class WinGameScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> sendScoreToApi(Score score) async {
+    final url = Uri.parse('https://your-rails-api.com/scores');
+    final headers = {'Content-Type': 'application/json'};
+    final body = jsonEncode(score.toJson());
+
+    final response = await http.post(url, headers: headers, body: body);
+
+    if (response.statusCode == 201) {
+      print('Score sent successfully');
+    } else {
+      print('Failed to send score: ${response.statusCode}');
+    }
   }
 }

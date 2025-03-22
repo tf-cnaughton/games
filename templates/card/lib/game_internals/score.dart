@@ -10,15 +10,17 @@ class Score {
 
   final int level;
 
-  factory Score(int level, int difficulty, Duration duration) {
+  String playerName;
+
+  factory Score(int level, int difficulty, Duration duration, String playerName) {
     // The higher the difficulty, the higher the score.
     var score = difficulty;
     // The lower the time to beat the level, the higher the score.
     score *= 10000 ~/ (duration.inSeconds.abs() + 1);
-    return Score._(score, duration, level);
+    return Score._(score, duration, level, playerName);
   }
 
-  const Score._(this.score, this.duration, this.level);
+  Score._(this.score, this.duration, this.level, this.playerName);
 
   String get formattedTime {
     final buf = StringBuffer();
@@ -41,5 +43,23 @@ class Score {
   }
 
   @override
-  String toString() => 'Score<$score,$formattedTime,$level>';
+  String toString() => 'Score<$score,$formattedTime,$level$playerName>';
+
+  void setPlayerName(String text) {
+    playerName = text;
+  }
+  
+   Map<String, dynamic> toJson() {
+
+    return {
+
+      'score': score,
+
+      'formattedTime': formattedTime,
+
+      'playerName': playerName,
+
+    };
+
+  }
 }
