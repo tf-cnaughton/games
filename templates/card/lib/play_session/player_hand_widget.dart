@@ -10,27 +10,37 @@ class PlayerHandWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final boardState = context.watch<BoardState>();
+    final player = boardState.player;
 
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: PlayingCardWidget.height),
-        child: ListenableBuilder(
-          // Make sure we rebuild every time there's an update
-          // to the player's hand.
-          listenable: boardState.player,
-          builder: (context, child) {
-            return Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 10,
-              runSpacing: 10,
-              children: [
-                ...boardState.player.hand.map((card) =>
-                    PlayingCardWidget(card, player: boardState.player)),
-              ],
-            );
-          },
-        ),
+      child: Column(
+        children: [
+          ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: PlayingCardWidget.height),
+            child: ListenableBuilder(
+              // Make sure we rebuild every time there's an update
+              // to the player's hand.
+              listenable: player,
+              builder: (context, child) {
+                return Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: [
+                    ...player.hand.map((card) =>
+                        PlayingCardWidget(card, player: player)),
+                  ],
+                );
+              },
+            ),
+          ),
+          SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: player.addCard,
+            child: Text('Add Card'),
+          ),
+        ],
       ),
     );
   }
