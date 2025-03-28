@@ -79,7 +79,8 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                   ),
                   const Spacer(),
                   // The actual UI of the game.
-                  DealerHandWidget.random(),
+                  DealerHandWidget(),
+                  
                   const BoardWidget(),
                   const Text('Drag cards to the two areas above.'),
                   const Spacer(),

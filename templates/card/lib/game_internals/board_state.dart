@@ -4,6 +4,7 @@
 
 import 'package:flutter/foundation.dart';
 
+import 'dealer.dart';
 import 'player.dart';
 import 'playing_area.dart';
 
@@ -15,6 +16,8 @@ class BoardState {
   final PlayingArea areaTwo = PlayingArea();
 
   final Player player = Player();
+
+  final Dealer dealer = Dealer();
 
   BoardState({required this.onWin}) {
     player.addListener(_handlePlayerChange);

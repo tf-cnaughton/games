@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
-import '../game_internals/playing_card.dart';
+import 'package:provider/provider.dart';
+
+import '../game_internals/board_state.dart';
 import 'playing_card_widget.dart';
 
 class DealerHandWidget extends StatelessWidget {
-  final PlayingCard card;
-
-  const DealerHandWidget({super.key, required this.card});
-
-  factory DealerHandWidget.random({Key? key}) {
-    return DealerHandWidget(
-      key: key,
-      card: PlayingCard.random(),
-    );
-  }
+  const DealerHandWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: PlayingCardWidget(card),
+    final boardState = context.watch<BoardState>();
+    final dealer = boardState.dealer;
+
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 10,
+      runSpacing: 10,
+      children: [
+        ...dealer.hand.map((card) =>
+            PlayingCardWidget(card)),
+      ],
     );
   }
 }
