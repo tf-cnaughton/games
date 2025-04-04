@@ -18,7 +18,8 @@ class PlayerHandWidget extends StatelessWidget {
       child: Column(
         children: [
           ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: PlayingCardWidget.height),
+            constraints:
+                const BoxConstraints(minHeight: PlayingCardWidget.height),
             child: ListenableBuilder(
               // Make sure we rebuild every time there's an update
               // to the player's hand.
@@ -29,8 +30,8 @@ class PlayerHandWidget extends StatelessWidget {
                   spacing: 10,
                   runSpacing: 10,
                   children: [
-                    ...player.hand.map((card) =>
-                        PlayingCardWidget(card, player: player)),
+                    ...player.hand
+                        .map((card) => PlayingCardWidget(card, player: player)),
                   ],
                 );
               },
@@ -38,14 +39,15 @@ class PlayerHandWidget extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Adjust spacing between buttons
+            mainAxisAlignment:
+                MainAxisAlignment.spaceEvenly, // Adjust spacing between buttons
             children: [
               ElevatedButton(
                 onPressed: player.addCard,
                 child: Text('Twist'),
               ),
               ElevatedButton(
-                onPressed: dealer.addCard,
+                onPressed: dealer.revealHand,
                 child: Text('Stick'),
               ),
             ],

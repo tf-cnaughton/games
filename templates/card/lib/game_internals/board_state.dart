@@ -19,21 +19,20 @@ class BoardState {
 
   final Dealer dealer = Dealer();
 
-  BoardState({required this.onWin}) {
-    player.addListener(_handlePlayerChange);
-  }
-
-  List<PlayingArea> get areas => [areaOne, areaTwo];
-
-  void dispose() {
-    player.removeListener(_handlePlayerChange);
-    areaOne.dispose();
-    areaTwo.dispose();
-  }
-
-  void _handlePlayerChange() {
-    if (player.hand.isEmpty) {
+  void evaluateGame() {
+    if (player.calculateScore() > 21 && dealer.calculateScore() > 21) {
+      // clear board
+    }
+    else if (player.calculateScore() > dealer.calculateScore()) {
       onWin();
     }
+    else if (player.calculateScore() < dealer.calculateScore()) {
+      // lose
+    }
+    else if (player.calculateScore() == dealer.calculateScore()) {
+      //foo
+    }
   }
+
+  void dispose() {}
 }

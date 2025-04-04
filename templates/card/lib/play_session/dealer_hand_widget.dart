@@ -26,7 +26,7 @@ class DealerHandWidget extends StatelessWidget {
                   spacing: 10,
                   runSpacing: 10,
                   children: [
-                    ...dealer.hand.map((card) =>
+                    ...dealer.dealerHand.map((card) =>
                         PlayingCardWidget(card)),
                   ],
                 );
