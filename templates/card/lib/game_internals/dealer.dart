@@ -9,4 +9,8 @@ class Dealer extends ChangeNotifier {
     hand.add(PlayingCard.random());
     notifyListeners();
   }
+
+  void reveal_hand(){
+    
+  }
 }

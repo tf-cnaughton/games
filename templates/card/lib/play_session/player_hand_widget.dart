@@ -11,6 +11,7 @@ class PlayerHandWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final boardState = context.watch<BoardState>();
     final player = boardState.player;
+    final dealer = boardState.dealer;
 
     return Padding(
       padding: const EdgeInsets.all(10),
@@ -36,9 +37,18 @@ class PlayerHandWidget extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: player.addCard,
-            child: Text('Add Card'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Adjust spacing between buttons
+            children: [
+              ElevatedButton(
+                onPressed: player.addCard,
+                child: Text('Twist'),
+              ),
+              ElevatedButton(
+                onPressed: dealer.addCard,
+                child: Text('Stick'),
+              ),
+            ],
           ),
         ],
       ),

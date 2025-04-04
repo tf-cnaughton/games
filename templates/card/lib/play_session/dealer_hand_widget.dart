@@ -12,14 +12,29 @@ class DealerHandWidget extends StatelessWidget {
     final boardState = context.watch<BoardState>();
     final dealer = boardState.dealer;
 
-    return Wrap(
-      alignment: WrapAlignment.center,
-      spacing: 10,
-      runSpacing: 10,
-      children: [
-        ...dealer.hand.map((card) =>
-            PlayingCardWidget(card)),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(       
+        children: [
+          ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: PlayingCardWidget.height),
+            child: ListenableBuilder(
+              listenable: dealer,
+              builder: (context, children) {
+                return Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: [
+                    ...dealer.hand.map((card) =>
+                        PlayingCardWidget(card)),
+                  ],
+                );
+              },        
+            )
+          )
+        ]
+      )
     );
   }
 }
