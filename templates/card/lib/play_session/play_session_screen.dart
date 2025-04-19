@@ -39,8 +39,6 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   bool _duringCelebration = false;
 
-  late DateTime _startOfPlay;
-
   late final BoardState _boardState;
 
   @override
@@ -119,14 +117,13 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   @override
   void initState() {
     super.initState();
-    _startOfPlay = DateTime.now();
     _boardState = BoardState(onWin: _playerWon, onLose: _playerLose, onDraw: _playerDraw);
   }
 
   Future<void> _playerWon() async {
     _log.info('Player won');
 
-    final score = Score(1, 1, DateTime.now().difference(_startOfPlay), 'Player');
+    final score = Score(1, 1, 'Player');
 
     // final playerProgress = context.read<PlayerProgress>();
     // playerProgress.setLevelReached(widget.level.number);
@@ -151,17 +148,6 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   Future<void> _playerLose() async {
     _log.info('Player lost');
-
-    await Future<void>.delayed(_preCelebrationDuration);
-    if (!mounted) return;
-
-    setState(() {
-      _duringCelebration = true;
-    });
-
-    /// Give the player some time to see the celebration animation.
-    await Future<void>.delayed(_celebrationDuration);
-    if (!mounted) return;
 
     GoRouter.of(context).go('/play/lost');
   }

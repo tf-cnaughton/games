@@ -41,7 +41,6 @@ class WinGameScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Score: ${score.score}\n'
-                'Time: ${score.formattedTime}\n'
                 'Name: ${score.playerName}',
                 style: const TextStyle(
                     fontFamily: 'Roboto', fontSize: 20),
@@ -71,7 +70,7 @@ class WinGameScreen extends StatelessWidget {
         ),
         rectangularMenuArea: MyButton(
           onPressed: () {
-            GoRouter.of(context).go('/');
+            GoRouter.of(context).go('/play');
           },
           child: const Text('Continue'),
         ),

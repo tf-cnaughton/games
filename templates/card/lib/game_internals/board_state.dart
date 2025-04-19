@@ -31,11 +31,18 @@ class BoardState {
     }
   }
 
-  void evaluateGame() {
+  Future<void> evaluateGame() async {
     dealer.revealHand();
+
+    await Future.delayed(const Duration(milliseconds: 1000));
 
     if (player.calculateScore() > 21 && dealer.calculateScore() > 21) {
       onDraw();
+      resetBoard();
+    } else if (dealer.calculateScore() > 21 && player.calculateScore() <= 21) {
+      onWin();
+    } else if (player.calculateScore() > 21 && dealer.calculateScore() <= 21) {
+      onLose();
     } else if (player.calculateScore() > dealer.calculateScore()) {
       onWin();
     } else if (player.calculateScore() < dealer.calculateScore()) {
