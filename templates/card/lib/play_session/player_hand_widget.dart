@@ -11,7 +11,6 @@ class PlayerHandWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final boardState = context.watch<BoardState>();
     final player = boardState.player;
-    final dealer = boardState.dealer;
 
     return Padding(
       padding: const EdgeInsets.all(10),
@@ -47,7 +46,7 @@ class PlayerHandWidget extends StatelessWidget {
                 child: Text('Twist'),
               ),
               ElevatedButton(
-                onPressed: dealer.revealHand,
+                onPressed: boardState.evaluateGame,
                 child: Text('Stick'),
               ),
             ],

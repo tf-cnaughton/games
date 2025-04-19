@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:card/main_menu/main_menu_screen.dart';
+import 'package:card/play_session/lost_game_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +59,11 @@ final router = GoRouter(
                   ),
                 );
               },
-            )
+            ),
+            GoRoute(
+              path: 'lost',
+              builder: (context, state) => const LostGameScreen(),
+            ),
           ],
         ),
         GoRoute(

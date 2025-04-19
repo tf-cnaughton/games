@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
 
-import 'board_state.dart';
 import 'playing_card.dart';
 
 class Dealer extends ChangeNotifier {
   final List<PlayingCard> dealerHand = [PlayingCard.random()];
-  final BoardState boardState = BoardState();
 
   void addCard() {
     dealerHand.add(PlayingCard.random());
@@ -27,10 +25,9 @@ class Dealer extends ChangeNotifier {
   }
 
   void revealHand(){
-    while (calculateScore() < 16){
+    while (calculateScore() < 16) {
       addCard();
       notifyListeners();
     }
-    boardState.evaluateGame();
   }
 }

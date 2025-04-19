@@ -120,7 +120,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   void initState() {
     super.initState();
     _startOfPlay = DateTime.now();
-    _boardState = BoardState(onWin: _playerWon);
+    _boardState = BoardState(onWin: _playerWon, onLose: _playerLose);
   }
 
   Future<void> _playerWon() async {
@@ -147,5 +147,22 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     if (!mounted) return;
 
     GoRouter.of(context).go('/play/won', extra: {'score': score});
+  }
+
+  Future<void> _playerLose() async {
+    _log.info('Player lost');
+
+    await Future<void>.delayed(_preCelebrationDuration);
+    if (!mounted) return;
+
+    setState(() {
+      _duringCelebration = true;
+    });
+
+    /// Give the player some time to see the celebration animation.
+    await Future<void>.delayed(_celebrationDuration);
+    if (!mounted) return;
+
+    GoRouter.of(context).go('/play/lost');
   }
 }
