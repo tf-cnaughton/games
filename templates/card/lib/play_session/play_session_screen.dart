@@ -120,7 +120,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   void initState() {
     super.initState();
     _startOfPlay = DateTime.now();
-    _boardState = BoardState(onWin: _playerWon, onLose: _playerLose);
+    _boardState = BoardState(onWin: _playerWon, onLose: _playerLose, onDraw: _playerDraw);
   }
 
   Future<void> _playerWon() async {
@@ -164,5 +164,11 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     if (!mounted) return;
 
     GoRouter.of(context).go('/play/lost');
+  }
+
+  void _playerDraw() {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text('It\'s a draw!')),
+  );
   }
 }
