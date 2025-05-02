@@ -1,0 +1,2 @@
+/Users/conornaughton/tech_stuff/games/templates/card/android/app/.cxx/Debug/6b4e6v5x/x86/CMakeFiles/edit_cache.dir
+/Users/conornaughton/tech_stuff/games/templates/card/android/app/.cxx/Debug/6b4e6v5x/x86/CMakeFiles/rebuild_cache.dir
