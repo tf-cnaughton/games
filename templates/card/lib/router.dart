@@ -66,8 +66,17 @@ final router = GoRouter(
               },
             ),
             GoRoute(
-              path: 'lost',
-              builder: (context, state) => const LostGameScreen(),
+                path: 'lost',
+                pageBuilder: (context, state) {
+                  final map = state.extra! as Map<String, dynamic>;
+                  final score = map['score'] as Score; // Retrieve the score
+                  return buildMyTransition<void>(
+                    key: const ValueKey('lost'),
+                    color: context.watch<Palette>().backgroundPlaySession,
+                    child: LostGameScreen(score: score) // Pass the score
+                  );
+                  
+                },
             ),
           ],
         ),

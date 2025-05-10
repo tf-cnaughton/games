@@ -1,8 +1,10 @@
+import 'package:card/game_internals/score.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class LostGameScreen extends StatelessWidget {
-  const LostGameScreen({super.key});
+  final Score score;
+  const LostGameScreen({super.key, required this.score});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,11 @@ class LostGameScreen extends StatelessWidget {
             const Text(
               'You Lost!',
               style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+            ),
+                       const SizedBox(height: 20),
+            Text(
+              'Your Score: $score', // Display the score
+              style: const TextStyle(fontSize: 24),
             ),
             const SizedBox(height: 20),
             ElevatedButton(

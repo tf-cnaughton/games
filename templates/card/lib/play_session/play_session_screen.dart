@@ -147,9 +147,10 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   }
 
   Future<void> _playerLose() async {
+    final Score score = Score(1, 1, 'Player');
     _log.info('Player lost');
 
-    GoRouter.of(context).go('/play/lost');
+    GoRouter.of(context).go('/play/lost', extra: {'score': score});
   }
 
   void _playerDraw() {

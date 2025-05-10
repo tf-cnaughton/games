@@ -52,17 +52,6 @@ class WinGameScreen extends StatelessWidget {
               ),
             ),
             gap,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  labelText: 'Enter your name',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            gap,
             ElevatedButton(
               onPressed: () async {
                 score.setPlayerName(nameController.text);
