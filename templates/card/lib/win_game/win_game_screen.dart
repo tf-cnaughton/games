@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:card/game_internals/board_state.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
@@ -12,10 +13,14 @@ import '../style/responsive_screen.dart';
 
 class WinGameScreen extends StatelessWidget {
   final Score score;
+  final BoardState boardState;
+  final VoidCallback stopCelebration;
 
   const WinGameScreen({
     super.key,
     required this.score,
+    required this.boardState,
+    required this.stopCelebration
   });
 
   @override
@@ -71,6 +76,8 @@ class WinGameScreen extends StatelessWidget {
         rectangularMenuArea: MyButton(
           onPressed: () {
             GoRouter.of(context).go('/play');
+            stopCelebration();          
+            boardState.resetBoard();
           },
           child: const Text('Continue'),
         ),

@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'game_internals/board_state.dart';
 import 'game_internals/score.dart';
 import 'login/login_screen.dart';
 import 'play_session/play_session_screen.dart';
@@ -49,12 +50,16 @@ final router = GoRouter(
               pageBuilder: (context, state) {
                 final map = state.extra! as Map<String, dynamic>;
                 final score = map['score'] as Score;
+                final boardState = map['boardState'] as BoardState;
+                final stopCelebration = map['stopCelebration'] as VoidCallback;
 
                 return buildMyTransition<void>(
                   key: const ValueKey('won'),
                   color: context.watch<Palette>().backgroundPlaySession,
                   child: WinGameScreen(
+                    boardState: boardState,
                     score: score,
+                    stopCelebration: stopCelebration,
                     key: const Key('win game'),
                   ),
                 );

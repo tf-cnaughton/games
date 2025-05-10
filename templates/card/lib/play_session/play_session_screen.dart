@@ -143,7 +143,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     await Future<void>.delayed(_celebrationDuration);
     if (!mounted) return;
 
-    GoRouter.of(context).go('/play/won', extra: {'score': score});
+    GoRouter.of(context).go('/play/won', extra: {'score': score, 'boardState': _boardState, 'stopCelebration': stopCelebration});
   }
 
   Future<void> _playerLose() async {
@@ -156,5 +156,11 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   ScaffoldMessenger.of(context).showSnackBar(
     const SnackBar(content: Text('It\'s a draw!')),
   );
+  }
+
+  void stopCelebration() {
+    setState(() {
+      _duringCelebration = false;
+    });
   }
 }
