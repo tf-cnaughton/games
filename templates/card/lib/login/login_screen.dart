@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../audio/audio_controller.dart';
 import '../settings/settings.dart';
 import '../style/palette.dart';
 import '../style/responsive_screen.dart';
@@ -17,6 +17,32 @@ class LoginScreen extends StatelessWidget {
 
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+
+    Future<void> _login() async {
+      try {
+        // Query Firestore for the username and password
+        final querySnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .where('Username', isEqualTo: usernameController.text.trim())
+            .where('Password', isEqualTo: passwordController.text.trim())
+            .get();
+
+        if (querySnapshot.docs.isNotEmpty) {
+          // User found, navigate to the main menu
+          GoRouter.of(context).go('/menu');
+        } else {
+          // User not found, show an error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invalid username or password')),
+          );
+        }
+      } catch (e) {
+        // Handle errors
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${e.toString()}')),
+        );
+      }
+    }
 
     return Scaffold(
       backgroundColor: palette.backgroundMain,
@@ -55,27 +81,7 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: () {
-                  final username = usernameController.text;
-                  final password = passwordController.text;
-
-                  // Handle login logic here
-                  if (username.isNotEmpty && password.isNotEmpty) {
-                    if (username == "Username" && password == "Password") {
-                      GoRouter.of(context).go('/menu');
-                    } else {
-                      // Show an error message if the credentials are incorrect
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Invalid username or password')),
-                      );
-                    }
-                  } else {
-                    // Show an error message
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Please enter both fields')),
-                    );
-                  }
-                },
+                onPressed: _login,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: palette.backgroundMain,
                 ),
