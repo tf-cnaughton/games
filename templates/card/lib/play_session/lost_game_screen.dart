@@ -21,9 +21,13 @@ class LostGameScreen extends StatelessWidget {
               style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
             ),
                        const SizedBox(height: 20),
-            Text(
-              'Your Score: $score', // Display the score
-              style: const TextStyle(fontSize: 24),
+            Center(
+              child: Text(
+                'Score: ${score.score}\n'
+                'Name: ${score.playerName}',
+                style: const TextStyle(
+                    fontFamily: 'Roboto', fontSize: 20),
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(

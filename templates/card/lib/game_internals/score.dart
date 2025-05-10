@@ -5,36 +5,25 @@
 /// Encapsulates a score and the arithmetic to compute it.
 class Score {
   final int score;
-
-  final int level;
-
   String playerName;
 
-  factory Score(int level, int difficulty, String playerName) {
-    // The higher the difficulty, the higher the score.
-    var score = difficulty;
-    // The lower the time to beat the level, the higher the score.
-    return Score._(score, level, playerName);
+  factory Score(int score, String playerName) {
+    return Score._(score, playerName);
   }
 
-  Score._(this.score, this.level, this.playerName);
+  Score._(this.score, this.playerName);
 
   @override
-  String toString() => 'Score<$score,$level$playerName>';
+  String toString() => 'Score<$score, $playerName>';
 
   void setPlayerName(String text) {
     playerName = text;
   }
-  
-   Map<String, dynamic> toJson() {
 
+  Map<String, dynamic> toJson() {
     return {
-
       'score': score,
-
       'playerName': playerName,
-
     };
-
   }
 }

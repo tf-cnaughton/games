@@ -32,14 +32,12 @@ class PlaySessionScreen extends StatefulWidget {
 
 class _PlaySessionScreenState extends State<PlaySessionScreen> {
   static final _log = Logger('PlaySessionScreen');
-
   static const _celebrationDuration = Duration(milliseconds: 2000);
-
   static const _preCelebrationDuration = Duration(milliseconds: 500);
-
   bool _duringCelebration = false;
-
   late final BoardState _boardState;
+
+  int _playerScore = 0; // Track the player's score
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +78,6 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                   DealerHandWidget(),
                   
                   const BoardWidget(),
-                  const Text('Drag cards to the two areas above.'),
                   const Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -122,8 +119,12 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
 
   Future<void> _playerWon() async {
     _log.info('Player won');
+    setState(() {
+      _playerScore++; // Increment the score
+    });
 
-    final score = Score(1, 1, 'Player');
+
+    final score = Score(_playerScore, 'Player'); // Pass the updated score
 
     // final playerProgress = context.read<PlayerProgress>();
     // playerProgress.setLevelReached(widget.level.number);
@@ -147,7 +148,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   }
 
   Future<void> _playerLose() async {
-    final Score score = Score(1, 1, 'Player');
+    final Score score = Score(_playerScore, 'Player');
     _log.info('Player lost');
 
     GoRouter.of(context).go('/play/lost', extra: {'score': score});
