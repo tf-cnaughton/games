@@ -39,9 +39,6 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             _gap,
-            const _NameChangeLine(
-              'Name',
-            ),
             ValueListenableBuilder<bool>(
               valueListenable: settings.soundsOn,
               builder: (context, soundsOn, child) => _SettingsLine(
@@ -57,19 +54,6 @@ class SettingsScreen extends StatelessWidget {
                 Icon(musicOn ? Icons.music_note : Icons.music_off),
                 onSelected: () => settings.toggleMusicOn(),
               ),
-            ),
-            _SettingsLine(
-              'Reset progress',
-              const Icon(Icons.delete),
-              onSelected: () {
-                context.read<PlayerProgress>().reset();
-
-                final messenger = ScaffoldMessenger.of(context);
-                messenger.showSnackBar(
-                  const SnackBar(
-                      content: Text('Player progress has been reset.')),
-                );
-              },
             ),
             _gap,
           ],

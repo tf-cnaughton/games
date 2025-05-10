@@ -49,19 +49,27 @@ class MainMenuScreen extends StatelessWidget {
               },
               child: const Text('Play'),
             ),
-            _gap,
+            const SizedBox(height: 10),
             MyButton(
               onPressed: () {
                 GoRouter.of(context).push('/view-scores');
               },
               child: const Text('View Scores'),
             ),
-            _gap,
+            const SizedBox(height: 10),
             MyButton(
               onPressed: () => GoRouter.of(context).push('/settings'),
               child: const Text('Settings'),
             ),
-            _gap,
+            const SizedBox(height: 10),
+            MyButton(
+              onPressed: () {
+                // Navigate back to the login screen
+                GoRouter.of(context).go('/');
+              },
+              child: const Text('Log Out'),
+            ),
+            const SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.only(top: 32),
               child: ValueListenableBuilder<bool>(
@@ -74,14 +82,11 @@ class MainMenuScreen extends StatelessWidget {
                 },
               ),
             ),
-            _gap,
             const Text('Music by Mr Smith'),
-            _gap,
+            const SizedBox(height: 10),
           ],
         ),
       ),
     );
   }
-
-  static const _gap = SizedBox(height: 10);
 }

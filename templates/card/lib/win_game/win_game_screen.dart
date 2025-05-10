@@ -52,14 +52,6 @@ class WinGameScreen extends StatelessWidget {
               ),
             ),
             gap,
-            ElevatedButton(
-              onPressed: () async {
-                score.setPlayerName(nameController.text);
-                await sendScoreToApi(score);
-                GoRouter.of(context).go('/');
-              },
-              child: Text('Submit'),
-            ),
           ],
         ),
         rectangularMenuArea: MyButton(
