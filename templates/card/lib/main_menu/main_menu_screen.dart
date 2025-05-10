@@ -51,6 +51,13 @@ class MainMenuScreen extends StatelessWidget {
             ),
             _gap,
             MyButton(
+              onPressed: () {
+                GoRouter.of(context).push('/view-scores');
+              },
+              child: const Text('View Scores'),
+            ),
+            _gap,
+            MyButton(
               onPressed: () => GoRouter.of(context).push('/settings'),
               child: const Text('Settings'),
             ),

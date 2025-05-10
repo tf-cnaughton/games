@@ -15,6 +15,7 @@ import 'play_session/play_session_screen.dart';
 import 'settings/settings_screen.dart';
 import 'style/my_transition.dart';
 import 'style/palette.dart';
+import 'view_scores/view_scores_screen.dart';
 import 'win_game/win_game_screen.dart';
 
 /// The router describes the game's navigational hierarchy, from the main
@@ -89,6 +90,10 @@ final router = GoRouter(
           path: 'menu', // Define the menu route
           builder: (context, state) =>
               const MainMenuScreen(key: Key('menu screen')), // Navigate to MenuScreen
+        ),
+        GoRoute(
+          path: 'view-scores',
+          builder: (context, state) => const ViewScoresScreen(),
         ),
       ],
     ),
