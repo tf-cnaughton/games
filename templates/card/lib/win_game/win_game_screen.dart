@@ -46,7 +46,7 @@ class WinGameScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Score: ${score.score}\n'
-                'Name: ${score.playerName}',
+                'Name: Username',
                 style: const TextStyle(
                     fontFamily: 'Roboto', fontSize: 20),
               ),

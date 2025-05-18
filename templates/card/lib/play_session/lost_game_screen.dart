@@ -26,7 +26,7 @@ class LostGameScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Score: ${score.score}\n'
-                'Name: ${score.playerName}',
+                'Name: Username',
                 style: const TextStyle(
                   fontFamily: 'Roboto',
                   fontSize: 20,
@@ -37,19 +37,14 @@ class LostGameScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 // Add a new record to Firestore
-                try {
                   await FirebaseFirestore.instance.collection('game_results').add({
-                    'playerName': score.playerName,
+                    'playerName': "Username",
                     'score': score.score,
                     'timestamp': FieldValue.serverTimestamp(), // Optional: Add a timestamp
                   });
-                  print('Record added to Firestore');
-                } catch (e) {
-                  print('Error adding record to Firestore: $e');
-                }
 
-                // Navigate back to the main menu
-                GoRouter.of(context).go('/menu');
+                  // Navigate back to the main menu
+                  GoRouter.of(context).go('/menu');
               },
               child: const Text('Back to Menu'),
             ),
