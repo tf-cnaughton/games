@@ -8,16 +8,19 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
 
 import 'app_lifecycle/app_lifecycle.dart';
 import 'audio/audio_controller.dart';
-import 'firebase_options.dart';
 import 'player_progress/player_progress.dart';
 import 'router.dart';
 import 'settings/settings.dart';
 import 'style/palette.dart';
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async {
   // Basic logging setup.
@@ -32,6 +35,12 @@ void main() async {
   });
 
   WidgetsFlutterBinding.ensureInitialized();
+  const AndroidInitializationSettings androidInitializationSettings =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  const InitializationSettings initializationSettings =
+      InitializationSettings(android: androidInitializationSettings);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   await Firebase.initializeApp();
   // Put game into full screen mode on mobile devices.
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -47,8 +56,64 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  Future<void> schedulePeriodicNotification() async {
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+      'reminder_channel', // Channel ID
+      'Reminder Notifications', // Channel name
+      channelDescription: 'Notifications to remind the user every 2 minutes',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidDetails);
+
+    await flutterLocalNotificationsPlugin.periodicallyShow(
+      0, // Notification ID
+      'Reminder', // Notification title
+      'Don’t forget to check the app!', // Notification body
+      RepeatInterval.everyMinute, // Repeat interval (closest to 2 minutes)
+      notificationDetails,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle, // Required parameter
+    );
+  }
+
+  Future<void> scheduleNotifications() async {
+    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+      'reminder_channel', // Channel ID
+      'Reminder Notifications', // Channel name
+      channelDescription: 'Notifications to remind the user every hour',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidDetails);
+
+    // Show the notification once upon app launch
+    await flutterLocalNotificationsPlugin.show(
+      0, // Notification ID
+      'Welcome!', // Notification title
+      'Thanks for launching the app!', // Notification body
+      notificationDetails,
+    );
+
+    // Schedule hourly notifications
+    await flutterLocalNotificationsPlugin.periodicallyShow(
+      1, // Notification ID
+      'Reminder', // Notification title
+      'Don’t forget to check the app!', // Notification body
+      RepeatInterval.hourly, // Repeat interval
+      notificationDetails,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle, // Required parameter
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    schedulePeriodicNotification();
+    scheduleNotifications();
     return AppLifecycleObserver(
       child: MultiProvider(
         // This is where you add objects that you want to have available
