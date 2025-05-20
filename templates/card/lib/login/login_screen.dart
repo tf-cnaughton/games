@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
 
-    Future<void> _login() async {
+    Future<void> login() async {
       try {
         // Query Firestore for the username and password
         final querySnapshot = await FirebaseFirestore.instance
@@ -83,7 +83,7 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: _login,
+                onPressed: login,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: palette.backgroundMain,
                 ),
