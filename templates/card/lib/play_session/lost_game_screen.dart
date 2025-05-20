@@ -1,7 +1,9 @@
 import 'package:card/game_internals/score.dart';
+import 'package:card/settings/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class LostGameScreen extends StatelessWidget {
   final Score score;
@@ -10,6 +12,7 @@ class LostGameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settingsController = context.watch<SettingsController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Game Over'),
@@ -26,7 +29,7 @@ class LostGameScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Score: ${score.score}\n'
-                'Name: Username',
+                'Name: ${settingsController.playerName.value}\n',
                 style: const TextStyle(
                   fontFamily: 'Roboto',
                   fontSize: 20,
@@ -38,7 +41,7 @@ class LostGameScreen extends StatelessWidget {
               onPressed: () async {
                 // Add a new record to Firestore
                   await FirebaseFirestore.instance.collection('game_results').add({
-                    'playerName': "Username",
+                    'playerName': settingsController.playerName.value,
                     'score': score.score,
                     'timestamp': FieldValue.serverTimestamp(), // Optional: Add a timestamp
                   });

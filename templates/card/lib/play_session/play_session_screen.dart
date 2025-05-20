@@ -4,6 +4,7 @@
 
 import 'dart:async';
 import 'package:card/play_session/dealer_hand_widget.dart';
+import 'package:card/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart' hide Level;
@@ -148,7 +149,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
   }
 
   Future<void> _playerLose() async {
-    final Score score = Score(_playerScore, 'Player');
+    final Score score = Score(_playerScore, '');
     _log.info('Player lost');
 
     GoRouter.of(context).go('/play/lost', extra: {'score': score});

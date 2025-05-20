@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:card/game_internals/board_state.dart';
+import 'package:card/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
@@ -26,8 +27,8 @@ class WinGameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = context.watch<Palette>();
+    final settingsController = context.watch<SettingsController>();
     const gap = SizedBox(height: 10);
-    final TextEditingController nameController = TextEditingController();
 
     return Scaffold(
       backgroundColor: palette.backgroundPlaySession,
@@ -46,7 +47,7 @@ class WinGameScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Score: ${score.score}\n'
-                'Name: Username',
+                'Name: ${settingsController.playerName.value}\n',
                 style: const TextStyle(
                     fontFamily: 'Roboto', fontSize: 20),
               ),
@@ -64,19 +65,5 @@ class WinGameScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> sendScoreToApi(Score score) async {
-    final url = Uri.parse('https://your-rails-api.com/scores');
-    final headers = {'Content-Type': 'application/json'};
-    final body = jsonEncode(score.toJson());
-
-    final response = await http.post(url, headers: headers, body: body);
-
-    if (response.statusCode == 201) {
-      print('Score sent successfully');
-    } else {
-      print('Failed to send score: ${response.statusCode}');
-    }
   }
 }

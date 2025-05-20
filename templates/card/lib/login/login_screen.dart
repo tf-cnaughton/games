@@ -28,8 +28,10 @@ class LoginScreen extends StatelessWidget {
             .get();
 
         if (querySnapshot.docs.isNotEmpty) {
+          settingsController.setPlayerName(usernameController.text.trim());
+
           // User found, navigate to the main menu
-          GoRouter.of(context).go('/menu');
+          GoRouter.of(context).go('/menu');          
         } else {
           // User not found, show an error message
           ScaffoldMessenger.of(context).showSnackBar(
