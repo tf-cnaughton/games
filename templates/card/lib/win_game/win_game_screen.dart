@@ -1,10 +1,8 @@
-import 'dart:convert';
 
 import 'package:card/game_internals/board_state.dart';
 import 'package:card/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../game_internals/score.dart';
